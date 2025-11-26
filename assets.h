@@ -12,6 +12,7 @@ inline Texture2D void_texture;
 inline Texture2D paddle_texture;
 inline Texture2D block_texture;
 
+inline sprite button_sprite;
 inline sprite ball_sprite;
 
 inline Sound win_sound;

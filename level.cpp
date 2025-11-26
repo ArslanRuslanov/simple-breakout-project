@@ -15,7 +15,7 @@ void load_level(const int offset)
 
     if (current_level_index >= level_count) {
         game_state = victory_state;
-        ClearBackground(BLACK);
+        ClearBackground(GRAY);
         init_victory_menu();
         current_level_index = 0;
 

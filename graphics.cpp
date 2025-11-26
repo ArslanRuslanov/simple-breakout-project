@@ -101,29 +101,61 @@ void derive_graphics_metrics()
     };
 }
 
+void draw_button_start()
+{
+
+    int buttonFrame = 0;
+    int frameWidth  = 800;
+    int frameHeight = 240;
+    Rectangle btnBounds = {550, 300, 200, 60};
+    Vector2 mousePoint = GetMousePosition();
+    bool btnAction = false;
+
+    if (CheckCollisionPointRec(mousePoint, btnBounds))
+    {
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            buttonFrame = 2;
+        else
+            buttonFrame = 1;
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+                btnAction = true;
+    }
+    else
+    {
+        buttonFrame = 0;
+    }
+
+        Rectangle source = {
+            (float)buttonFrame * frameWidth,
+            0,
+            (float)frameWidth,
+            (float)frameHeight
+    };
+
+    Rectangle dest = {550, 300, 200, 60};
+    Vector2 origin = {0, 0};
+    Texture2D texture = button_sprite.frames[buttonFrame];
+    DrawTexturePro(texture, source, dest, origin, 0, WHITE);
+    if (btnAction)
+        game_state = in_game_state;
+
+}
+
 void draw_menu()
 {
     ClearBackground(BLACK);
 
     const Text game_title = {
         "Breakout",
-        { 0.50f, 0.50f },
+        { 0.50f, 0.30f },
         200.0f,
         RED,
         4.0f,
         &menu_font
     };
     draw_text(game_title);
+    draw_button_start();
 
-    const Text game_subtitle = {
-        "Press Enter to Start",
-        { 0.50f, 0.65f },
-        32.0f,
-        WHITE,
-        4.0f,
-        &menu_font
-    };
-    draw_text(game_subtitle);
 }
 
 void draw_ui()
@@ -151,7 +183,7 @@ void draw_ui()
 
 void draw_level()
 {
-    ClearBackground(BLACK);
+    ClearBackground(DARKGRAY);
 
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
@@ -188,7 +220,7 @@ void draw_ball()
 
 void draw_pause_menu()
 {
-    ClearBackground(BLACK);
+    ClearBackground(DARKGRAY);
 
     const Text paused_title = {
         "Press Escape to Resume",
