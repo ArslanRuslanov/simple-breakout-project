@@ -183,7 +183,7 @@ void draw_ui()
 
 void draw_level()
 {
-    ClearBackground(DARKGRAY);
+    ClearBackground(RAYWHITE);
 
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
@@ -203,27 +203,47 @@ void draw_level()
         }
     }
 }
-
+int paddleFrame = 0;
 void draw_paddle()
 {
     const float texture_x_pos = shift_to_center.x + paddle_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + paddle_pos.y * cell_size;
-    draw_image(paddle_texture, texture_x_pos, texture_y_pos, paddle_size.x * cell_size, paddle_size.y * cell_size);
+    int frameWidth  = 384;
+    int frameHeight = 384;
+    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_D) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT))
+    {
+        paddleFrame++;
+        if (paddleFrame > 2) {
+            paddleFrame = 1;
+        }
+    }
+    else
+    {
+        paddleFrame = 0;
+    }
+    Rectangle source = { 0, 0, (float)frameWidth, (float)frameHeight };
+    Rectangle dest = { texture_x_pos, texture_y_pos, 166, 166 };
+    Vector2 origin = { 0, 0 };
+
+    Texture2D texture = paddle_texture.frames[paddleFrame];
+
+    DrawTexturePro(texture, source, dest, origin, 0, WHITE);
 }
+
 
 void draw_ball()
 {
     const float texture_x_pos = shift_to_center.x + ball_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + ball_pos.y * cell_size;
-    draw_sprite(ball_sprite, texture_x_pos, texture_y_pos, cell_size);
+    draw_image(ball_sprite, texture_x_pos, texture_y_pos,  cell_size, cell_size);
 }
 
 void draw_pause_menu()
 {
-    ClearBackground(DARKGRAY);
+    ClearBackground(BLACK);
 
     const Text paused_title = {
-        "Press Escape to Resume",
+        "Press Space to Resume",
         { 0.50f, 0.50f },
         32.0f,
         WHITE,

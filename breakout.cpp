@@ -38,6 +38,7 @@ void update()
         }
         break;
     case victory_state:
+        current_level_index = -1;
         if (IsKeyPressed(KEY_ENTER)) {
             game_state = menu_state;
         }

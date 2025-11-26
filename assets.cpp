@@ -17,9 +17,9 @@ void load_textures()
     wall_texture = LoadTexture("data/images/wall.png");
     void_texture = LoadTexture("data/images/void.png");
     block_texture = LoadTexture("data/images/block.png");
-    paddle_texture = LoadTexture("data/images/paddle.png");
+    paddle_texture = load_sprite("data/images/knight/knight", ".png", 3, true, 1);
     button_sprite = load_sprite("data/images/start/start", ".png", 3, true, 1);
-    ball_sprite = load_sprite("data/images/ball/ball", ".png", 8, true, 10);
+    ball_sprite = LoadTexture("data/images/ball0.png");
 }
 
 void unload_textures()
@@ -27,9 +27,9 @@ void unload_textures()
     UnloadTexture(wall_texture);
     UnloadTexture(void_texture);
     UnloadTexture(block_texture);
-    UnloadTexture(paddle_texture);
+    unload_sprite(paddle_texture);
     unload_sprite(button_sprite);
-    unload_sprite(ball_sprite);
+    UnloadTexture(ball_sprite);
 }
 
 void load_sounds()
