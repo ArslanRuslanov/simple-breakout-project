@@ -101,6 +101,53 @@ void derive_graphics_metrics()
     };
 }
 
+void animate_texture(sprite sprite, int framecount, float x_pos, float y_pos, float width, float height, int frameWidth, int frameHeight)
+{
+    Rectangle source = {
+        (float)framecount * frameWidth,
+        0,
+        (float)frameWidth,
+        (float)frameHeight
+    };
+    Rectangle dest = {x_pos, y_pos, width, height};
+    Vector2 origin = {0, 0};
+    Texture2D texture = sprite.frames[framecount];
+    DrawTexturePro(texture, source, dest, origin, 0, WHITE);
+}
+
+void button_action(bool action, enum game_state state)
+{
+    if (action) {
+        game_state = state;
+    }
+}
+
+void draw_button_quit()
+{
+    int buttonFrame = 0;
+    int frameWidth  = 800;
+    int frameHeight = 240;
+    Rectangle btnBounds = {550, 400, 200, 60};
+    Vector2 mousePoint = GetMousePosition();
+    bool btnAction = false;
+
+    if (CheckCollisionPointRec(mousePoint, btnBounds))
+    {
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            buttonFrame = 2;
+        else
+            buttonFrame = 1;
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            btnAction = true;
+    }
+    else
+    {
+        buttonFrame = 0;
+    }
+    animate_texture(quit_button_sprite, buttonFrame, 550, 400, 200, 60, frameWidth, frameHeight);
+    if (btnAction) CloseWindow();
+}
+
 void draw_button_start()
 {
 
@@ -124,20 +171,8 @@ void draw_button_start()
     {
         buttonFrame = 0;
     }
-
-        Rectangle source = {
-            (float)buttonFrame * frameWidth,
-            0,
-            (float)frameWidth,
-            (float)frameHeight
-    };
-
-    Rectangle dest = {550, 300, 200, 60};
-    Vector2 origin = {0, 0};
-    Texture2D texture = button_sprite.frames[buttonFrame];
-    DrawTexturePro(texture, source, dest, origin, 0, WHITE);
-    if (btnAction)
-        game_state = in_game_state;
+    animate_texture(button_sprite, buttonFrame, 550, 300, 200, 60, frameWidth, frameHeight);
+    button_action(btnAction, in_game_state);
 
 }
 
@@ -155,7 +190,7 @@ void draw_menu()
     };
     draw_text(game_title);
     draw_button_start();
-
+    draw_button_quit();
 }
 
 void draw_ui()
@@ -208,12 +243,12 @@ void draw_paddle()
 {
     const float texture_x_pos = shift_to_center.x + paddle_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + paddle_pos.y * cell_size;
-    int frameWidth  = 384;
-    int frameHeight = 384;
+    int frameWidth  = 48;
+    int frameHeight = 64;
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_D) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT))
     {
         paddleFrame++;
-        if (paddleFrame > 2) {
+        if (paddleFrame > 12) {
             paddleFrame = 1;
         }
     }
@@ -221,13 +256,7 @@ void draw_paddle()
     {
         paddleFrame = 0;
     }
-    Rectangle source = { 0, 0, (float)frameWidth, (float)frameHeight };
-    Rectangle dest = { texture_x_pos, texture_y_pos, 166, 166 };
-    Vector2 origin = { 0, 0 };
-
-    Texture2D texture = paddle_texture.frames[paddleFrame];
-
-    DrawTexturePro(texture, source, dest, origin, 0, WHITE);
+    animate_texture(paddle_texture, paddleFrame, texture_x_pos, texture_y_pos, 166, 166, frameWidth, frameHeight);
 }
 
 
