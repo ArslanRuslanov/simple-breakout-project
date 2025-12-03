@@ -20,6 +20,8 @@ void load_textures()
     paddle_texture = load_sprite("data/images/skeleton/skeleton", ".png", 13, true, 1);
     button_sprite = load_sprite("data/images/start/start", ".png", 3, true, 1);
     ball_sprite = LoadTexture("data/images/ball0.png");
+    background_texture = LoadTexture("data/images/background2.png");
+    background_of_level_texture = LoadTexture("data/images/background3.png");
     quit_button_sprite = load_sprite("data/images/quit/quit", ".png", 3, true, 1);
 }
 
@@ -32,6 +34,8 @@ void unload_textures()
     unload_sprite(button_sprite);
     UnloadTexture(ball_sprite);
     unload_sprite(quit_button_sprite);
+    UnloadTexture(background_texture);
+    UnloadTexture(background_of_level_texture);
 }
 
 void load_sounds()

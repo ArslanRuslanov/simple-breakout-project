@@ -127,7 +127,7 @@ void draw_button_quit()
     int buttonFrame = 0;
     int frameWidth  = 800;
     int frameHeight = 240;
-    Rectangle btnBounds = {550, 400, 200, 60};
+    Rectangle btnBounds = {900, 400, 200, 60};
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
@@ -144,8 +144,14 @@ void draw_button_quit()
     {
         buttonFrame = 0;
     }
-    animate_texture(quit_button_sprite, buttonFrame, 550, 400, 200, 60, frameWidth, frameHeight);
-    if (btnAction) CloseWindow();
+    animate_texture(quit_button_sprite, buttonFrame, 900, 400, 200, 60, frameWidth, frameHeight);
+    if (btnAction) {
+        CloseWindow();
+        unload_sounds();
+        unload_level();
+        unload_textures();
+        unload_fonts();
+    }
 }
 
 void draw_button_start()
@@ -154,7 +160,7 @@ void draw_button_start()
     int buttonFrame = 0;
     int frameWidth  = 800;
     int frameHeight = 240;
-    Rectangle btnBounds = {550, 300, 200, 60};
+    Rectangle btnBounds = {900, 300, 200, 60};
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
@@ -171,14 +177,24 @@ void draw_button_start()
     {
         buttonFrame = 0;
     }
-    animate_texture(button_sprite, buttonFrame, 550, 300, 200, 60, frameWidth, frameHeight);
+    animate_texture(button_sprite, buttonFrame, 900, 300, 200, 60, frameWidth, frameHeight);
     button_action(btnAction, in_game_state);
 
 }
 
 void draw_menu()
 {
-    ClearBackground(BLACK);
+    ClearBackground(RAYWHITE);
+
+    DrawTexturePro(
+    background_texture,
+    { 0, 0, 640.0, 360.0},
+    { 0, 0, 1280.0, 720.0},
+    { 0, 0 },
+    0,
+    WHITE);
+
+
 
     const Text game_title = {
         "Breakout",
@@ -220,6 +236,15 @@ void draw_level()
 {
     ClearBackground(RAYWHITE);
 
+    DrawTexturePro(
+    background_of_level_texture,
+    { 0, 0, 640.0, 360.0},
+    { 0, 0, 1280.0, 720.0},
+    { 0, 0 },
+    0,
+    WHITE
+);
+
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
             const char data = current_level.data[row * current_level.columns + column];
@@ -238,6 +263,7 @@ void draw_level()
         }
     }
 }
+
 int paddleFrame = 0;
 void draw_paddle()
 {
@@ -270,6 +296,15 @@ void draw_ball()
 void draw_pause_menu()
 {
     ClearBackground(BLACK);
+
+    DrawTexturePro(
+    background_of_level_texture,
+    { 0, 0, 640.0, 360.0},
+    { 0, 0, 1280.0, 720.0},
+    { 0, 0 },
+    0,
+    WHITE
+);
 
     const Text paused_title = {
         "Press Space to Resume",

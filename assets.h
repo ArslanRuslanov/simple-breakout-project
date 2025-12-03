@@ -11,6 +11,8 @@ inline Texture2D wall_texture;
 inline Texture2D void_texture;
 inline Texture2D ball_sprite;
 inline Texture2D block_texture;
+inline Texture2D background_texture;
+inline Texture2D background_of_level_texture;
 
 inline sprite quit_button_sprite;
 inline sprite paddle_texture;
