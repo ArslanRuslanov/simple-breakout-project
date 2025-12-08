@@ -22,7 +22,9 @@ void load_textures()
     ball_sprite = LoadTexture("data/images/ball0.png");
     background_texture = LoadTexture("data/images/background2.png");
     background_of_level_texture = LoadTexture("data/images/background3.png");
-    logo_texture = LoadTexture("data/images/logo/logo0.png");
+    logo_texture = load_sprite("data/images/logo/logo", ".png", 17, true, 1);
+    victory_texture = LoadTexture("data/images/VICTORY.png");
+    win_sprite = load_sprite("data/images/win/win", ".png", 4, true, 1);
     quit_button_sprite = load_sprite("data/images/quit/quit", ".png", 3, true, 1);
 }
 
@@ -37,7 +39,9 @@ void unload_textures()
     unload_sprite(quit_button_sprite);
     UnloadTexture(background_texture);
     UnloadTexture(background_of_level_texture);
-    UnloadTexture(logo_texture);
+    unload_sprite(logo_texture);
+    UnloadTexture(victory_texture);
+    unload_sprite(win_sprite);
 }
 
 void load_sounds()

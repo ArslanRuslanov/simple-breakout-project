@@ -127,7 +127,7 @@ void draw_button_quit()
     int buttonFrame = 0;
     int frameWidth  = 512;
     int frameHeight = 288;
-    Rectangle btnBounds = {850, 450, 150, 80};
+    Rectangle btnBounds = {850, 400, 150, 80};
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
@@ -182,10 +182,20 @@ void draw_button_start()
 
 }
 
+int logo_frame = 0;
+int logo_frame_counter = 0;
+int logo_frame_speed = 10;
 void draw_title()
 {
-    DrawTexturePro(logo_texture, {0, 0, 64, 16}, {650, 150, 400, 100}, {0, 0}, 0, RAYWHITE);
-}
+    animate_texture(logo_texture, logo_frame, 550, 100, 600, 150, 1024, 256);
+    logo_frame_counter++;
+    if (logo_frame_counter >= logo_frame_speed)
+    {
+        logo_frame++;
+        if (logo_frame > 16) logo_frame = 0;
+
+        logo_frame_counter = 0;
+    }}
 
 void draw_menu()
 {
@@ -340,29 +350,27 @@ void animate_victory_menu()
     }
 }
 
+int win_frame = 0;
+int win_frame_counter = 0;
+int win_frame_speed = 10;
+
 void draw_victory_menu()
 {
-    animate_victory_menu();
+    animate_texture(win_sprite, win_frame, 0, 0, 1280, 720, 640, 360);
+    win_frame_counter++;
+    if (win_frame_counter >= win_frame_speed)
+    {
+        win_frame++;
+        if (win_frame > 3) win_frame = 0;
 
-    DrawRectangleV({ 0.0f, 0.0f }, { screen_size.x, screen_size.y }, { 0, 0, 0, 50 });
-
-    for (const auto& [x, y] : victory_balls_pos) {
-        DrawCircleV({ x, y }, victory_balls_size, WHITE);
+        win_frame_counter = 0;
     }
 
-    const Text victory_title = {
-        "Victory!",
-        { 0.50f, 0.50f },
-        100.0f,
-        RED,
-        4.0f,
-        &menu_font
-    };
-    draw_text(victory_title);
+    DrawTexturePro(victory_texture, {0, 0, 1024, 256}, {650, 100, 600, 140}, {0, 0}, 0, RAYWHITE);
 
     const Text victory_subtitle = {
         "Press Enter to Restart",
-        { 0.50f, 0.65f },
+        { 0.75f, 0.40f },
         32.0f,
         WHITE,
         4.0f,

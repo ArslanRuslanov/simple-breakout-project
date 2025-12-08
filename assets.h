@@ -13,11 +13,13 @@ inline Texture2D ball_sprite;
 inline Texture2D block_texture;
 inline Texture2D background_texture;
 inline Texture2D background_of_level_texture;
-inline Texture2D logo_texture;
+inline Texture2D victory_texture;
 
+inline sprite win_sprite;
 inline sprite quit_button_sprite;
 inline sprite paddle_texture;
 inline sprite button_sprite;
+inline sprite logo_texture;
 
 
 inline Sound win_sound;
