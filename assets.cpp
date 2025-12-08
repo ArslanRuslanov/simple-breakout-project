@@ -14,14 +14,15 @@ void unload_fonts()
 
 void load_textures()
 {
-    wall_texture = LoadTexture("data/images/block.png");
+    wall_texture = LoadTexture("data/images/wall.png");
     void_texture = LoadTexture("data/images/void.png");
-    block_texture = LoadTexture("data/images/wall.png");
-    paddle_texture = load_sprite("data/images/skeleton/skeleton", ".png", 13, true, 1);
+    block_texture = LoadTexture("data/images/block.png");
+    paddle_texture = load_sprite("data/images/skeleton/skeli", ".png", 11, true, 1);
     button_sprite = load_sprite("data/images/start/start", ".png", 3, true, 1);
     ball_sprite = LoadTexture("data/images/ball0.png");
     background_texture = LoadTexture("data/images/background2.png");
     background_of_level_texture = LoadTexture("data/images/background3.png");
+    logo_texture = LoadTexture("data/images/logo/logo0.png");
     quit_button_sprite = load_sprite("data/images/quit/quit", ".png", 3, true, 1);
 }
 
@@ -36,6 +37,7 @@ void unload_textures()
     unload_sprite(quit_button_sprite);
     UnloadTexture(background_texture);
     UnloadTexture(background_of_level_texture);
+    UnloadTexture(logo_texture);
 }
 
 void load_sounds()

@@ -125,9 +125,9 @@ void button_action(bool action, enum game_state state)
 void draw_button_quit()
 {
     int buttonFrame = 0;
-    int frameWidth  = 800;
-    int frameHeight = 240;
-    Rectangle btnBounds = {900, 400, 200, 60};
+    int frameWidth  = 512;
+    int frameHeight = 288;
+    Rectangle btnBounds = {850, 450, 150, 80};
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
@@ -144,7 +144,7 @@ void draw_button_quit()
     {
         buttonFrame = 0;
     }
-    animate_texture(quit_button_sprite, buttonFrame, 900, 400, 200, 60, frameWidth, frameHeight);
+    animate_texture(quit_button_sprite, buttonFrame, 850, 400, 150, 80, frameWidth, frameHeight);
     if (btnAction) {
         CloseWindow();
         unload_sounds();
@@ -158,9 +158,9 @@ void draw_button_start()
 {
 
     int buttonFrame = 0;
-    int frameWidth  = 800;
-    int frameHeight = 240;
-    Rectangle btnBounds = {900, 300, 200, 60};
+    int frameWidth  = 512;
+    int frameHeight = 288;
+    Rectangle btnBounds = {850, 300, 150, 80};
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
@@ -177,9 +177,14 @@ void draw_button_start()
     {
         buttonFrame = 0;
     }
-    animate_texture(button_sprite, buttonFrame, 900, 300, 200, 60, frameWidth, frameHeight);
+    animate_texture(button_sprite, buttonFrame, 850, 300, 150, 80, frameWidth, frameHeight);
     button_action(btnAction, in_game_state);
 
+}
+
+void draw_title()
+{
+    DrawTexturePro(logo_texture, {0, 0, 64, 16}, {650, 150, 400, 100}, {0, 0}, 0, RAYWHITE);
 }
 
 void draw_menu()
@@ -195,16 +200,7 @@ void draw_menu()
     WHITE);
 
 
-
-    const Text game_title = {
-        "Breakout",
-        { 0.50f, 0.30f },
-        200.0f,
-        RED,
-        4.0f,
-        &menu_font
-    };
-    draw_text(game_title);
+    draw_title();
     draw_button_start();
     draw_button_quit();
 }
@@ -269,12 +265,12 @@ void draw_paddle()
 {
     const float texture_x_pos = shift_to_center.x + paddle_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + paddle_pos.y * cell_size;
-    int frameWidth  = 48;
-    int frameHeight = 64;
+    int frameWidth  = 32;
+    int frameHeight = 32;
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_D) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT))
     {
         paddleFrame++;
-        if (paddleFrame > 12) {
+        if (paddleFrame > 10) {
             paddleFrame = 1;
         }
     }
