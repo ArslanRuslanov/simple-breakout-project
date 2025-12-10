@@ -4,6 +4,7 @@
 #include "ball.h"
 #include "level.h"
 #include "paddle.h"
+#include "boss.h"
 
 #include "raylib.h"
 
@@ -19,6 +20,24 @@ struct Text {
     float spacing = 4.0f;
     Font* font = nullptr;
 };
+
+int logo_frame = 0;
+int logo_frame_counter = 0;
+int logo_frame_speed = 10;
+
+int win_frame = 0;
+int win_frame_counter = 0;
+int win_frame_speed = 10;
+
+int paddleFrame = 0;
+
+int enemy_frame = 0;
+int enemy_frame_counter = 0;
+int enemy_frame_speed = 10;
+
+int boss_frame = 0;
+int boss_frame_counter = 0;
+int boss_frame_speed = 10;
 
 constexpr float cell_scale = 0.6f;
 constexpr float screen_scale_divisor = 700.0f;
@@ -182,12 +201,10 @@ void draw_button_start()
 
 }
 
-int logo_frame = 0;
-int logo_frame_counter = 0;
-int logo_frame_speed = 10;
+
 void draw_title()
 {
-    animate_texture(logo_texture, logo_frame, 550, 100, 600, 150, 1024, 256);
+    animate_texture(logo_sprite, logo_frame, 550, 100, 600, 150, 1024, 256);
     logo_frame_counter++;
     if (logo_frame_counter >= logo_frame_speed)
     {
@@ -209,7 +226,7 @@ void draw_menu()
     0,
     WHITE);
 
-
+    draw_image(ball_texture, 270, 560, 80, 80);
     draw_title();
     draw_button_start();
     draw_button_quit();
@@ -217,25 +234,15 @@ void draw_menu()
 
 void draw_ui()
 {
-    const Text level_counter = {
-        "LEVEL " + std::to_string(current_level_index + 1) + " OUT OF " + std::to_string(level_count),
+    const Text counter = {
+        "LEVEL " + std::to_string(current_level_index + 1) + " BLOCKS " + std::to_string(current_level_blocks),
         { 0.5f, 0.0375f },
         48.0f,
         WHITE,
         4.0f,
         &menu_font
     };
-    draw_text(level_counter);
-
-    const Text boxes_remaining = {
-        "BLOCKS " + std::to_string(current_level_blocks),
-        { 0.5f, 0.9625f },
-        48.0f,
-        WHITE,
-        4.0f,
-        &menu_font
-    };
-    draw_text(boxes_remaining);
+    draw_text(counter);
 }
 
 void draw_level()
@@ -251,6 +258,15 @@ void draw_level()
     WHITE
 );
 
+    enemy_frame_counter++;
+    if (enemy_frame_counter >= enemy_frame_speed)
+    {
+        enemy_frame++;
+        if (enemy_frame > 3) enemy_frame = 0;
+
+        enemy_frame_counter = 0;
+    }
+
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
             const char data = current_level.data[row * current_level.columns + column];
@@ -261,7 +277,10 @@ void draw_level()
             case WALL:
                 draw_image(wall_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
-            case BLOCKS:
+            case ENEMY:
+                animate_texture(enemy_sprite, enemy_frame, texture_x_pos, texture_y_pos, cell_size * 1.2, cell_size * 1.2, 16, 20);
+                break;
+            case BREAKABLE:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
             default:;
@@ -270,7 +289,23 @@ void draw_level()
     }
 }
 
-int paddleFrame = 0;
+void draw_boss()
+{
+    const float texture_x_pos = shift_to_center.x + boss_pos.x * cell_size;
+    const float texture_y_pos = shift_to_center.y + boss_pos.y * cell_size;
+
+    boss_frame_counter++;
+    if (boss_frame_counter >= boss_frame_speed)
+    {
+        boss_frame++;
+        if (boss_frame > 1) boss_frame = 0;
+
+        boss_frame_counter = 0;
+    }
+
+    animate_texture(boss_sprite, boss_frame, texture_x_pos, texture_y_pos, cell_size * 3, cell_size * 3, 400, 384);
+}
+
 void draw_paddle()
 {
     const float texture_x_pos = shift_to_center.x + paddle_pos.x * cell_size;
@@ -288,7 +323,7 @@ void draw_paddle()
     {
         paddleFrame = 0;
     }
-    animate_texture(paddle_texture, paddleFrame, texture_x_pos, texture_y_pos, 166, 166, frameWidth, frameHeight);
+    animate_texture(paddle_sprite, paddleFrame, texture_x_pos, texture_y_pos, 166, 166, frameWidth, frameHeight);
 }
 
 
@@ -296,7 +331,7 @@ void draw_ball()
 {
     const float texture_x_pos = shift_to_center.x + ball_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + ball_pos.y * cell_size;
-    draw_image(ball_sprite, texture_x_pos, texture_y_pos,  cell_size, cell_size);
+    draw_image(ball_texture, texture_x_pos, texture_y_pos,  cell_size, cell_size);
 }
 
 void draw_pause_menu()
@@ -350,9 +385,6 @@ void animate_victory_menu()
     }
 }
 
-int win_frame = 0;
-int win_frame_counter = 0;
-int win_frame_speed = 10;
 
 void draw_victory_menu()
 {

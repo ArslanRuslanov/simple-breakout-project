@@ -1,5 +1,6 @@
 #include "ball.h"
 #include "assets.h"
+#include "boss.h"
 #include "level.h"
 #include "paddle.h"
 
@@ -41,20 +42,42 @@ void move_ball()
             ball_vel.y = -ball_vel.y;
             next_ball_pos.y = std::round(next_ball_pos.y);
         }
-    } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, BLOCKS)) {
-        char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BLOCKS);
+    } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, ENEMY)) {
+        char& temp = get_colliding_level_cell(next_ball_pos, ball_size, ENEMY);
 
-        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, BLOCKS)) {
+        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, ENEMY)) {
             ball_vel.x = -ball_vel.x;
             next_ball_pos.x = std::round(next_ball_pos.x);
         }
-        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, BLOCKS)) {
+        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, ENEMY)) {
             ball_vel.y = -ball_vel.y;
             next_ball_pos.y = std::round(next_ball_pos.y);
         }
 
         temp = VOID;
         --current_level_blocks;
+    } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, BREAKABLE)) {
+        char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BREAKABLE);
+
+        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, BREAKABLE)) {
+            ball_vel.x = -ball_vel.x;
+            next_ball_pos.x = std::round(next_ball_pos.x);
+        }
+        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, BREAKABLE)) {
+            ball_vel.y = -ball_vel.y;
+            next_ball_pos.y = std::round(next_ball_pos.y);
+        }
+
+        temp = VOID;
+    } else if (is_colliding_with_boss(next_ball_pos, ball_size)) {
+        if (is_colliding_with_boss({ next_ball_pos.x, ball_pos.y }, ball_size)) {
+            ball_vel.x = -ball_vel.x;
+            next_ball_pos.x = std::round(next_ball_pos.x);
+        }
+        if (is_colliding_with_boss({ ball_pos.x, next_ball_pos.y }, ball_size)) {
+            ball_vel.y = -ball_vel.y;
+            next_ball_pos.y = std::round(next_ball_pos.y);
+        }
     } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
         ball_vel.y = -std::abs(ball_vel.y);
     }

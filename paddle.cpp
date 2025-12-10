@@ -9,7 +9,7 @@ void spawn_paddle()
 {
     for (int column = 0; column < current_level.columns; column++) {
         for (int row = 0; row < current_level.rows; row++) {
-            if (get_level_cell(row, column) == PADDLE) {
+            if (get_level_cell(row, column) == SKELI) {
                 set_level_cell(row, column, VOID);
                 paddle_pos = { static_cast<float>(column), static_cast<float>(row) };
                 goto outer_loop_end;

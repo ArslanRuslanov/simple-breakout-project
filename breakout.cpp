@@ -4,6 +4,7 @@
 #include "graphics.h"
 #include "level.h"
 #include "paddle.h"
+#include "boss.h"
 
 #include "raylib.h"
 
@@ -14,6 +15,9 @@ void update()
 
         break;
     case in_game_state:
+        if (IsKeyPressed(KEY_V)) {
+            load_level(1);
+        }
         if (IsKeyPressed(KEY_SPACE)) {
             game_state = paused_state;
         }
@@ -24,6 +28,8 @@ void update()
             move_paddle(paddle_speed);
         }
         move_ball();
+        if (current_level_index == 3)
+            move_boss();
         if (!is_ball_inside_level()) {
             load_level();
             PlaySound(lose_sound);
@@ -58,6 +64,8 @@ void draw()
         draw_paddle();
         draw_ball();
         draw_ui();
+        if (current_level_index == 3)
+            draw_boss();
         break;
     case paused_state:
         draw_pause_menu();
