@@ -13,5 +13,6 @@ inline Vector2 ball_vel;
 void spawn_ball();
 void move_ball();
 bool is_ball_inside_level();
+bool is_hitting_boss();
 
 #endif // BALL_H

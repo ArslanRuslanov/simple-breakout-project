@@ -2,9 +2,9 @@
 
 #include "assets.h"
 #include "ball.h"
+#include "boss.h"
 #include "level.h"
 #include "paddle.h"
-#include "boss.h"
 
 #include "raylib.h"
 
@@ -128,8 +128,8 @@ void animate_texture(sprite sprite, int framecount, float x_pos, float y_pos, fl
         (float)frameWidth,
         (float)frameHeight
     };
-    Rectangle dest = {x_pos, y_pos, width, height};
-    Vector2 origin = {0, 0};
+    Rectangle dest = { x_pos, y_pos, width, height };
+    Vector2 origin = { 0, 0 };
     Texture2D texture = sprite.frames[framecount];
     DrawTexturePro(texture, source, dest, origin, 0, WHITE);
 }
@@ -144,23 +144,20 @@ void button_action(bool action, enum game_state state)
 void draw_button_quit()
 {
     int buttonFrame = 0;
-    int frameWidth  = 512;
+    int frameWidth = 512;
     int frameHeight = 288;
-    Rectangle btnBounds = {850, 400, 150, 80};
+    Rectangle btnBounds = { 850, 400, 150, 80 };
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
-    if (CheckCollisionPointRec(mousePoint, btnBounds))
-    {
+    if (CheckCollisionPointRec(mousePoint, btnBounds)) {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             buttonFrame = 2;
         else
             buttonFrame = 1;
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
             btnAction = true;
-    }
-    else
-    {
+    } else {
         buttonFrame = 0;
     }
     animate_texture(quit_button_sprite, buttonFrame, 850, 400, 150, 80, frameWidth, frameHeight);
@@ -177,54 +174,50 @@ void draw_button_start()
 {
 
     int buttonFrame = 0;
-    int frameWidth  = 512;
+    int frameWidth = 512;
     int frameHeight = 288;
-    Rectangle btnBounds = {850, 300, 150, 80};
+    Rectangle btnBounds = { 850, 300, 150, 80 };
     Vector2 mousePoint = GetMousePosition();
     bool btnAction = false;
 
-    if (CheckCollisionPointRec(mousePoint, btnBounds))
-    {
+    if (CheckCollisionPointRec(mousePoint, btnBounds)) {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             buttonFrame = 2;
         else
             buttonFrame = 1;
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-                btnAction = true;
-    }
-    else
-    {
+            btnAction = true;
+    } else {
         buttonFrame = 0;
     }
     animate_texture(button_sprite, buttonFrame, 850, 300, 150, 80, frameWidth, frameHeight);
     button_action(btnAction, in_game_state);
-
 }
-
 
 void draw_title()
 {
     animate_texture(logo_sprite, logo_frame, 550, 100, 600, 150, 1024, 256);
     logo_frame_counter++;
-    if (logo_frame_counter >= logo_frame_speed)
-    {
+    if (logo_frame_counter >= logo_frame_speed) {
         logo_frame++;
-        if (logo_frame > 16) logo_frame = 0;
+        if (logo_frame > 16)
+            logo_frame = 0;
 
         logo_frame_counter = 0;
-    }}
+    }
+}
 
 void draw_menu()
 {
     ClearBackground(RAYWHITE);
 
     DrawTexturePro(
-    background_texture,
-    { 0, 0, 640.0, 360.0},
-    { 0, 0, 1280.0, 720.0},
-    { 0, 0 },
-    0,
-    WHITE);
+        background_texture,
+        { 0, 0, 640.0, 360.0 },
+        { 0, 0, 1280.0, 720.0 },
+        { 0, 0 },
+        0,
+        WHITE);
 
     draw_image(ball_texture, 270, 560, 80, 80);
     draw_title();
@@ -250,19 +243,18 @@ void draw_level()
     ClearBackground(RAYWHITE);
 
     DrawTexturePro(
-    background_of_level_texture,
-    { 0, 0, 640.0, 360.0},
-    { 0, 0, 1280.0, 720.0},
-    { 0, 0 },
-    0,
-    WHITE
-);
+        background_of_level_texture,
+        { 0, 0, 640.0, 360.0 },
+        { 0, 0, 1280.0, 720.0 },
+        { 0, 0 },
+        0,
+        WHITE);
 
     enemy_frame_counter++;
-    if (enemy_frame_counter >= enemy_frame_speed)
-    {
+    if (enemy_frame_counter >= enemy_frame_speed) {
         enemy_frame++;
-        if (enemy_frame > 3) enemy_frame = 0;
+        if (enemy_frame > 3)
+            enemy_frame = 0;
 
         enemy_frame_counter = 0;
     }
@@ -278,7 +270,7 @@ void draw_level()
                 draw_image(wall_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
             case ENEMY:
-                animate_texture(enemy_sprite, enemy_frame, texture_x_pos, texture_y_pos, cell_size * 1.2, cell_size * 1.2, 16, 20);
+                animate_texture(enemy_sprite, enemy_frame, texture_x_pos, texture_y_pos, 1.2 * cell_size, cell_size * 1.2, 16, 20);
                 break;
             case BREAKABLE:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
@@ -288,50 +280,62 @@ void draw_level()
         }
     }
 }
+int hp = boss_hp;
+void draw_boss_hp()
+{
+    if (is_hitting_boss()) {
+        hp--;
+    }
+    const float texture_x_pos = shift_to_center.x + boss_pos.x * cell_size;
+    const float texture_y_pos = shift_to_center.y + boss_pos.y * cell_size - 20;
+    DrawRectangle(texture_x_pos, texture_y_pos, cell_size * 3, 10, RED);
+    float hp_bar = cell_size * 3 / boss_hp;
+    for (int i = 0; i < hp; ++i) {
+        DrawRectangle(texture_x_pos + hp_bar * i, texture_y_pos, hp_bar, 10, GREEN);
+    }
+    if (game_state == victory_state)
+        hp = boss_hp;
+}
 
 void draw_boss()
 {
     const float texture_x_pos = shift_to_center.x + boss_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + boss_pos.y * cell_size;
-
+    int frameWidth = 400;
+    int frameHeight = 384;
     boss_frame_counter++;
-    if (boss_frame_counter >= boss_frame_speed)
-    {
+    if (boss_frame_counter >= boss_frame_speed) {
         boss_frame++;
-        if (boss_frame > 1) boss_frame = 0;
+        if (boss_frame > 1)
+            boss_frame = 0;
 
         boss_frame_counter = 0;
     }
-
-    animate_texture(boss_sprite, boss_frame, texture_x_pos, texture_y_pos, cell_size * 3, cell_size * 3, 400, 384);
+    animate_texture(boss_sprite, boss_frame, texture_x_pos, texture_y_pos, cell_size * 3, cell_size * 3, frameWidth, frameHeight);
 }
 
 void draw_paddle()
 {
     const float texture_x_pos = shift_to_center.x + paddle_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + paddle_pos.y * cell_size;
-    int frameWidth  = 32;
+    int frameWidth = 32;
     int frameHeight = 32;
-    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_D) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT))
-    {
+    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_D) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_RIGHT)) {
         paddleFrame++;
         if (paddleFrame > 10) {
             paddleFrame = 1;
         }
-    }
-    else
-    {
+    } else {
         paddleFrame = 0;
     }
     animate_texture(paddle_sprite, paddleFrame, texture_x_pos, texture_y_pos, 166, 166, frameWidth, frameHeight);
 }
 
-
 void draw_ball()
 {
     const float texture_x_pos = shift_to_center.x + ball_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + ball_pos.y * cell_size;
-    draw_image(ball_texture, texture_x_pos, texture_y_pos,  cell_size, cell_size);
+    draw_image(ball_texture, texture_x_pos, texture_y_pos, cell_size, cell_size);
 }
 
 void draw_pause_menu()
@@ -339,13 +343,12 @@ void draw_pause_menu()
     ClearBackground(BLACK);
 
     DrawTexturePro(
-    background_of_level_texture,
-    { 0, 0, 640.0, 360.0},
-    { 0, 0, 1280.0, 720.0},
-    { 0, 0 },
-    0,
-    WHITE
-);
+        background_of_level_texture,
+        { 0, 0, 640.0, 360.0 },
+        { 0, 0, 1280.0, 720.0 },
+        { 0, 0 },
+        0,
+        WHITE);
 
     const Text paused_title = {
         "Press Space to Resume",
@@ -385,20 +388,19 @@ void animate_victory_menu()
     }
 }
 
-
 void draw_victory_menu()
 {
     animate_texture(win_sprite, win_frame, 0, 0, 1280, 720, 640, 360);
     win_frame_counter++;
-    if (win_frame_counter >= win_frame_speed)
-    {
+    if (win_frame_counter >= win_frame_speed) {
         win_frame++;
-        if (win_frame > 3) win_frame = 0;
+        if (win_frame > 3)
+            win_frame = 0;
 
         win_frame_counter = 0;
     }
 
-    DrawTexturePro(victory_texture, {0, 0, 1024, 256}, {650, 100, 600, 140}, {0, 0}, 0, RAYWHITE);
+    DrawTexturePro(victory_texture, { 0, 0, 1024, 256 }, { 650, 100, 600, 140 }, { 0, 0 }, 0, RAYWHITE);
 
     const Text victory_subtitle = {
         "Press Enter to Restart",

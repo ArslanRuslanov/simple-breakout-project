@@ -9,6 +9,8 @@
 #include <cmath>
 #include <numbers>
 
+int hit = boss_hp;
+
 void spawn_ball()
 {
     for (int column = 0; column < current_level.columns; column++) {
@@ -42,6 +44,15 @@ void move_ball()
             ball_vel.y = -ball_vel.y;
             next_ball_pos.y = std::round(next_ball_pos.y);
         }
+    } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, BOUNDARY)) {
+        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, BOUNDARY)) {
+            ball_vel.x = -ball_vel.x;
+            next_ball_pos.x = std::round(next_ball_pos.x);
+        }
+        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, BOUNDARY)) {
+            ball_vel.y = -ball_vel.y;
+            next_ball_pos.y = std::round(next_ball_pos.y);
+        }
     } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, ENEMY)) {
         char& temp = get_colliding_level_cell(next_ball_pos, ball_size, ENEMY);
 
@@ -70,6 +81,9 @@ void move_ball()
 
         temp = VOID;
     } else if (is_colliding_with_boss(next_ball_pos, ball_size)) {
+        char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BOSS);
+        hit--;
+
         if (is_colliding_with_boss({ next_ball_pos.x, ball_pos.y }, ball_size)) {
             ball_vel.x = -ball_vel.x;
             next_ball_pos.x = std::round(next_ball_pos.x);
@@ -78,11 +92,27 @@ void move_ball()
             ball_vel.y = -ball_vel.y;
             next_ball_pos.y = std::round(next_ball_pos.y);
         }
+        if (hit <= 0) {
+            temp = VOID;
+            current_level_blocks--;
+        }
+
+
     } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
         ball_vel.y = -std::abs(ball_vel.y);
     }
 
     ball_pos = next_ball_pos;
+}
+bool is_hitting_boss()
+{
+    Vector2 next_ball_pos = {
+        ball_pos.x + ball_vel.x,
+        ball_pos.y + ball_vel.y
+    };
+    if (is_colliding_with_boss(next_ball_pos, ball_size)) {
+        return true;
+    }
 }
 
 bool is_ball_inside_level()

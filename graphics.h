@@ -12,5 +12,6 @@ void draw_pause_menu();
 void init_victory_menu();
 void draw_victory_menu();
 void draw_boss();
+void draw_boss_hp();
 
 #endif // GRAPHICS_H
