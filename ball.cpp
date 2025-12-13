@@ -9,7 +9,7 @@
 #include <cmath>
 #include <numbers>
 
-int hit = boss_hp;
+
 
 void spawn_ball()
 {
@@ -98,21 +98,12 @@ void move_ball()
         }
 
 
+
     } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
         ball_vel.y = -std::abs(ball_vel.y);
     }
 
     ball_pos = next_ball_pos;
-}
-bool is_hitting_boss()
-{
-    Vector2 next_ball_pos = {
-        ball_pos.x + ball_vel.x,
-        ball_pos.y + ball_vel.y
-    };
-    if (is_colliding_with_boss(next_ball_pos, ball_size)) {
-        return true;
-    }
 }
 
 bool is_ball_inside_level()

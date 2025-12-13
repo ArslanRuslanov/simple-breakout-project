@@ -40,6 +40,7 @@ void load_level(const int offset)
     spawn_ball();
     spawn_paddle();
     spawn_boss();
+    hit = boss_hp;
 
     derive_graphics_metrics();
 }

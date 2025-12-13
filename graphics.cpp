@@ -280,21 +280,16 @@ void draw_level()
         }
     }
 }
-int hp = boss_hp;
+
 void draw_boss_hp()
 {
-    if (is_hitting_boss()) {
-        hp--;
-    }
     const float texture_x_pos = shift_to_center.x + boss_pos.x * cell_size;
     const float texture_y_pos = shift_to_center.y + boss_pos.y * cell_size - 20;
     DrawRectangle(texture_x_pos, texture_y_pos, cell_size * 3, 10, RED);
     float hp_bar = cell_size * 3 / boss_hp;
-    for (int i = 0; i < hp; ++i) {
+    for (int i = 0; i < hit; ++i) {
         DrawRectangle(texture_x_pos + hp_bar * i, texture_y_pos, hp_bar, 10, GREEN);
     }
-    if (game_state == victory_state)
-        hp = boss_hp;
 }
 
 void draw_boss()
