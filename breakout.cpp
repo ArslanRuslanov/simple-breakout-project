@@ -35,10 +35,15 @@ void update()
         move_ball();
         if (is_paddle_colliding_with_sword() || !is_ball_inside_level()) {
             load_level();
+            paddle_hp--;
             PlaySound(lose_sound);
         } else if (current_level_blocks == 0) {
             load_level(1);
+            paddle_hp++;
             PlaySound(win_sound);
+        }
+        if (paddle_hp == 0) {
+            game_state = game_over_state;
         }
         break;
     case paused_state:
@@ -47,13 +52,20 @@ void update()
         }
         break;
     case victory_state:
-        current_level_index = -1;
+        current_level_index = 0;
         if (IsKeyPressed(KEY_ENTER)) {
             game_state = menu_state;
         }
         break;
     case cut_scene_state:
 
+        break;
+    case game_over_state:
+        current_level_index = 0;
+        paddle_hp = 3;
+        if (IsKeyPressed(KEY_ENTER)) {
+            game_state = menu_state;
+        }
         break;
     }
 }
@@ -81,6 +93,9 @@ void draw()
         break;
     case victory_state:
         draw_victory_menu();
+        break;
+    case game_over_state:
+        draw_game_over_menu();
         break;
     }
 }

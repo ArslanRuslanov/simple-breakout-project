@@ -228,6 +228,8 @@ void draw_menu()
 
 void draw_ui()
 {
+    const float texture_x_pos = cell_size + 75;
+    const float texture_y_pos = shift_to_center.y + cell_size;
     const Text counter = {
         "LEVEL " + std::to_string(current_level_index + 1) + " BLOCKS " + std::to_string(current_level_blocks),
         { 0.5f, 0.0375f },
@@ -236,6 +238,14 @@ void draw_ui()
         4.0f,
         &menu_font
     };
+    for (int j = 0; j < 3; j++) {
+        animate_texture(heart_sprite, 1, texture_x_pos, texture_y_pos + j * 100, 75, 75, 256, 256);
+    }
+
+    for (int i = 0; i < paddle_hp; ++i) {
+        animate_texture(heart_sprite, 0, texture_x_pos, texture_y_pos + i * 100, 75, 75, 256, 256);
+    }
+
     draw_text(counter);
 }
 
@@ -416,4 +426,29 @@ void draw_victory_menu()
         &menu_font
     };
     draw_text(victory_subtitle);
+}
+
+void draw_game_over_menu()
+{
+    ClearBackground(BLACK);
+
+    const Text game_over_title = {
+        "GAME OVER",
+        { 0.75, 0.20 },
+        40.0f,
+        WHITE,
+        4.0f,
+        &menu_font
+    };
+
+    draw_text(game_over_title);
+    const Text game_over_subtitle = {
+        "Press Enter to Restart",
+        { 0.75f, 0.40f },
+        32.0f,
+        WHITE,
+        4.0f,
+        &menu_font
+    };
+    draw_text(game_over_subtitle);
 }

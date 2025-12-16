@@ -14,5 +14,6 @@ void draw_victory_menu();
 void draw_boss();
 void draw_boss_hp();
 void draw_sword();
+void draw_game_over_menu();
 
 #endif // GRAPHICS_H

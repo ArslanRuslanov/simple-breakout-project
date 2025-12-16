@@ -23,6 +23,7 @@ enum game_state {
     in_game_state,
     cut_scene_state,
     paused_state,
+    game_over_state,
     victory_state
 };
 
