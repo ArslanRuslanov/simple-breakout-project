@@ -5,6 +5,7 @@
 #include "graphics.h"
 #include "level.h"
 #include "paddle.h"
+#include "sword.h"
 
 #include "raylib.h"
 
@@ -29,9 +30,10 @@ void update()
         }
         if (current_level_index == 3) {
             move_boss();
+            move_sword();
         }
         move_ball();
-        if (!is_ball_inside_level()) {
+        if (is_paddle_colliding_with_sword() || !is_ball_inside_level()) {
             load_level();
             PlaySound(lose_sound);
         } else if (current_level_blocks == 0) {
@@ -71,6 +73,7 @@ void draw()
         if (current_level_index == 3) {
             draw_boss();
             draw_boss_hp();
+            draw_sword();
         }
         break;
     case paused_state:

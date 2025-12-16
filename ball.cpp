@@ -3,6 +3,7 @@
 #include "boss.h"
 #include "level.h"
 #include "paddle.h"
+#include "sword.h"
 
 #include "raylib.h"
 

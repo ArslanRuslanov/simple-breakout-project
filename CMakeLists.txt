@@ -29,5 +29,7 @@ add_executable(
         paddle.cpp
         boss.cpp
         boss.h
+        sword.cpp
+        sword.h
 )
 target_link_libraries(breakout PRIVATE raylib glfw)

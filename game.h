@@ -11,6 +11,7 @@ constexpr char BOUNDARY = '!';
 constexpr char BALL = '*';
 constexpr char BREAKABLE = 'B';
 constexpr char BOSS = '&';
+constexpr char SWORD = '|';
 
 struct level {
     size_t rows = 0, columns = 0;
@@ -87,7 +88,7 @@ inline level level_3 = {
 
 inline char level_4_data[] = {
     '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#',
+    '#', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '#',
     '#', ' ', '&', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#',
     '#', '!', '!', '!', '!', '!', '!', '!', '!', '!', '!', '!', '#',
     '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#',

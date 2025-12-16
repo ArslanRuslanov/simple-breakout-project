@@ -5,6 +5,7 @@
 #include "boss.h"
 #include "level.h"
 #include "paddle.h"
+#include "sword.h"
 
 #include "raylib.h"
 
@@ -307,6 +308,15 @@ void draw_boss()
         boss_frame_counter = 0;
     }
     animate_texture(boss_sprite, boss_frame, texture_x_pos, texture_y_pos, cell_size * 3, cell_size * 3, frameWidth, frameHeight);
+}
+
+void draw_sword()
+{
+    const float texture_x_pos = shift_to_center.x + sword_pos.x * cell_size;
+    const float texture_y_pos = shift_to_center.y + sword_pos.y * cell_size;
+    int frameWidth = 50;
+    int frameHeight = 125;
+    draw_image(sword_texture, texture_x_pos, texture_y_pos, frameWidth, frameHeight);
 }
 
 void draw_paddle()

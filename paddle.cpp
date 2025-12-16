@@ -1,5 +1,6 @@
 #include "paddle.h"
 #include "level.h"
+#include "sword.h"
 
 #include "raylib.h"
 
@@ -33,4 +34,12 @@ bool is_colliding_with_paddle(const Vector2 pos, const Vector2 size)
     const Rectangle paddle_hitbox = { paddle_pos.x, paddle_pos.y, paddle_size.x, paddle_size.y };
     const Rectangle hitbox = { pos.x, pos.y, size.x, size.y };
     return CheckCollisionRecs(paddle_hitbox, hitbox);
+}
+
+
+bool is_paddle_colliding_with_sword()
+{
+    Rectangle sword_box = {sword_pos.x, sword_pos.y, sword_size.x, sword_size.y};
+    Rectangle paddle_box = {paddle_pos.x, paddle_pos.y, paddle_size.x, paddle_size.y};
+    return CheckCollisionRecs(paddle_box, sword_box);
 }
