@@ -4,6 +4,7 @@
 #include "level.h"
 #include "paddle.h"
 #include "shield.h"
+#include "portal.h"
 
 #include "raylib.h"
 
@@ -56,7 +57,7 @@ void move_ball()
         }
     } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, ENEMY)) {
         char& temp = get_colliding_level_cell(next_ball_pos, ball_size, ENEMY);
-
+        PlaySound(hit_sound);
         if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, ENEMY)) {
             ball_vel.x = -ball_vel.x;
             next_ball_pos.x = std::round(next_ball_pos.x);
@@ -97,27 +98,32 @@ void move_ball()
         }
 
         temp = VOID;
-    } else if (is_colliding_with_boss(next_ball_pos, ball_size)) {
-        char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BOSS);
-        hit--;
-
-        if (is_colliding_with_boss({ next_ball_pos.x, ball_pos.y }, ball_size)) {
-            ball_vel.x = -ball_vel.x;
-            next_ball_pos.x = std::round(next_ball_pos.x);
-        }
-        if (is_colliding_with_boss({ ball_pos.x, next_ball_pos.y }, ball_size)) {
-            ball_vel.y = -ball_vel.y;
-            next_ball_pos.y = std::round(next_ball_pos.y);
-        }
-        if (hit <= 0) {
-            temp = VOID;
-            current_level_blocks--;
-        }
-
-
-
     } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
         ball_vel.y = -std::abs(ball_vel.y);
+    }
+    if (current_level_index == 2) {
+        if (is_colliding_with_portal1(next_ball_pos, ball_size)) {
+            next_ball_pos = portal2_pos;
+        }
+    }
+    if (current_level_index == 4) {
+        if (is_colliding_with_boss(next_ball_pos, ball_size)) {
+            char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BOSS);
+            hit--;
+            PlaySound(hit_sound);
+            if (is_colliding_with_boss({ next_ball_pos.x, ball_pos.y }, ball_size)) {
+                ball_vel.x = -ball_vel.x;
+                next_ball_pos.x = std::round(next_ball_pos.x);
+            }
+            if (is_colliding_with_boss({ ball_pos.x, next_ball_pos.y }, ball_size)) {
+                ball_vel.y = -ball_vel.y;
+                next_ball_pos.y = std::round(next_ball_pos.y);
+            }
+            if (hit <= 0) {
+                temp = VOID;
+                current_level_blocks--;
+            }
+        }
     }
 
     ball_pos = next_ball_pos;

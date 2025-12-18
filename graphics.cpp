@@ -5,8 +5,9 @@
 #include "boss.h"
 #include "level.h"
 #include "paddle.h"
-#include "sword.h"
+#include "portal.h"
 #include "shield.h"
+#include "sword.h"
 
 #include "raylib.h"
 
@@ -275,15 +276,6 @@ void draw_level()
         enemy_frame_counter = 0;
     }
 
-    portal_frame_counter++;
-    if (portal_frame_counter >= portal_frame_speed) {
-        portal_frame++;
-        if (portal_frame > 2)
-            portal_frame = 0;
-
-        portal_frame_counter = 0;
-    }
-
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
             const char data = current_level.data[row * current_level.columns + column];
@@ -300,12 +292,6 @@ void draw_level()
             case BREAKABLE:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
                 break;
-            case PORTAL1:
-                animate_texture(portal_sprite, portal_frame, texture_x_pos, texture_y_pos - 20, cell_size, cell_size / 2, 11, 33);
-                break;
-            case PORTAL2:
-                animate_texture(portal_sprite, portal_frame, texture_x_pos, texture_y_pos - 20, cell_size, cell_size / 2, 11, 33);
-                break;
             case SHIELD:
                 animate_texture(enemy_sprite, enemy_frame, texture_x_pos, texture_y_pos, 1.2 * cell_size, cell_size * 1.2, 16, 20);
                 if (shield_hp == 2)
@@ -315,6 +301,27 @@ void draw_level()
             }
         }
     }
+}
+
+void draw_portal()
+{
+    const float texture_x_pos = shift_to_center.x + portal1_pos.x * cell_size;
+    const float texture_y_pos = shift_to_center.y + portal1_pos.y * cell_size;
+    const float texture_x1_pos = shift_to_center.x + portal2_pos.x * cell_size;
+    const float texture_y1_pos = shift_to_center.y + portal2_pos.y * cell_size;
+
+    portal_frame_counter++;
+    if (portal_frame_counter >= portal_frame_speed) {
+        portal_frame++;
+        if (portal_frame > 2)
+            portal_frame = 0;
+
+        portal_frame_counter = 0;
+    }
+
+    animate_texture(portal_sprite, portal_frame, texture_x_pos, texture_y_pos, cell_size, cell_size, 11, 33);
+    animate_texture(portal_sprite, portal_frame, texture_x1_pos, texture_y1_pos, cell_size, cell_size, 11, 33);
+
 }
 
 void draw_boss_hp()

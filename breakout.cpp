@@ -36,12 +36,11 @@ void update()
         if (is_paddle_colliding_with_sword() || !is_ball_inside_level()) {
             load_level();
             paddle_hp--;
-            PlaySound(lose_sound);
+            PlaySound(boss_sound);
         } else if (current_level_blocks == 0) {
             load_level(1);
             paddle_hp++;
             if (paddle_hp > 3) paddle_hp = 3;
-            PlaySound(win_sound);
         }
         if (paddle_hp == 0) {
             game_state = game_over_state;
@@ -81,6 +80,7 @@ void draw()
         draw_paddle();
         draw_ball();
         draw_ui();
+        if (current_level_index == 2) draw_portal();
         if (current_level_index == 4) {
             draw_boss();
             draw_boss_hp();

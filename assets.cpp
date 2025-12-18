@@ -64,13 +64,21 @@ void unload_textures()
 void load_sounds()
 {
     InitAudioDevice();
-    win_sound = LoadSound("data/sounds/win.wav");
-    lose_sound = LoadSound("data/sounds/lose.wav");
+    hit_sound = LoadSound("data/sounds/win.wav");
+    boss_sound = LoadSound("data/sounds/lose.wav");
+    boss_level_sound = LoadSound("data/sounds/boss_soundtrack.wav");
+    level_sound = LoadSound("data/sounds/level_soundtrack.wav");
+    main_menu_sound = LoadSound("data/sounds/main_menu_soundtrack.wav");
+    win_sound = LoadSound("data/sounds/victory_menu_soundtrack.wav");
 }
 
 void unload_sounds()
 {
+    UnloadSound(hit_sound);
+    UnloadSound(boss_sound);
+    UnloadSound(boss_level_sound);
+    UnloadSound(level_sound);
+    UnloadSound(main_menu_sound);
     UnloadSound(win_sound);
-    UnloadSound(lose_sound);
     CloseAudioDevice();
 }

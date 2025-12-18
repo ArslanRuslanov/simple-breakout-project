@@ -5,6 +5,7 @@
 #include "game.h"
 #include "graphics.h"
 #include "paddle.h"
+#include "portal.h"
 
 #include "raylib.h"
 #include "shield.h"
@@ -41,6 +42,7 @@ void load_level(const int offset)
 
     spawn_ball();
     spawn_paddle();
+    spawn_portal();
     if (current_level_index == 4) {
         spawn_boss();
         spawn_sword();

@@ -15,5 +15,6 @@ void draw_boss();
 void draw_boss_hp();
 void draw_sword();
 void draw_game_over_menu();
+void draw_portal();
 
 #endif // GRAPHICS_H

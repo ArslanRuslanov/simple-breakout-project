@@ -31,7 +31,7 @@ void move_boss()
 
 bool is_colliding_with_boss(const Vector2 pos, const Vector2 size)
 {
-    const Rectangle paddle_hitbox = { boss_pos.x, boss_pos.y, boss_size.x, boss_size.y };
+    const Rectangle boss_hitbox = { boss_pos.x, boss_pos.y, boss_size.x, boss_size.y };
     const Rectangle hitbox = { pos.x, pos.y, size.x, size.y };
-    return CheckCollisionRecs(paddle_hitbox, hitbox);
+    return CheckCollisionRecs(boss_hitbox, hitbox);
 }

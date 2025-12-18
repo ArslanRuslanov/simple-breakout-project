@@ -28,8 +28,12 @@ inline sprite button_sprite;
 inline sprite logo_sprite;
 inline sprite portal_sprite;
 
+inline Sound hit_sound;
+inline Sound boss_level_sound;
 inline Sound win_sound;
-inline Sound lose_sound;
+inline Sound level_sound;
+inline Sound main_menu_sound;
+inline Sound boss_sound;
 
 void load_fonts();
 void unload_fonts();
