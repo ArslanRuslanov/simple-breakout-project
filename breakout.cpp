@@ -28,7 +28,7 @@ void update()
         if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
             move_paddle(paddle_speed);
         }
-        if (current_level_index == 3) {
+        if (current_level_index == 4) {
             move_boss();
             move_sword();
         }
@@ -40,6 +40,7 @@ void update()
         } else if (current_level_blocks == 0) {
             load_level(1);
             paddle_hp++;
+            if (paddle_hp > 3) paddle_hp = 3;
             PlaySound(win_sound);
         }
         if (paddle_hp == 0) {
@@ -52,7 +53,6 @@ void update()
         }
         break;
     case victory_state:
-        current_level_index = 0;
         if (IsKeyPressed(KEY_ENTER)) {
             game_state = menu_state;
         }
@@ -72,7 +72,6 @@ void update()
 
 void draw()
 {
-    // TODO
     switch (game_state) {
     case menu_state:
         draw_menu();
@@ -82,7 +81,7 @@ void draw()
         draw_paddle();
         draw_ball();
         draw_ui();
-        if (current_level_index == 3) {
+        if (current_level_index == 4) {
             draw_boss();
             draw_boss_hp();
             draw_sword();

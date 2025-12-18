@@ -15,6 +15,8 @@ inline Texture2D background_texture;
 inline Texture2D background_of_level_texture;
 inline Texture2D victory_texture;
 inline Texture2D sword_texture;
+inline Texture2D background_defeat;
+inline Texture2D shield_texture;
 
 inline sprite win_sprite;
 inline sprite enemy_sprite;
@@ -24,6 +26,7 @@ inline sprite quit_button_sprite;
 inline sprite paddle_sprite;
 inline sprite button_sprite;
 inline sprite logo_sprite;
+inline sprite portal_sprite;
 
 inline Sound win_sound;
 inline Sound lose_sound;

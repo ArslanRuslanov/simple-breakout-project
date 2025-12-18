@@ -1,6 +1,6 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
-
+inline float cell_size;
 void derive_graphics_metrics();
 
 void draw_menu();

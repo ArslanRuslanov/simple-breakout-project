@@ -6,6 +6,7 @@
 #include "level.h"
 #include "paddle.h"
 #include "sword.h"
+#include "shield.h"
 
 #include "raylib.h"
 
@@ -40,6 +41,10 @@ int boss_frame = 0;
 int boss_frame_counter = 0;
 int boss_frame_speed = 10;
 
+int portal_frame_counter = 0;
+int portal_frame = 0;
+int portal_frame_speed = 10;
+
 constexpr float cell_scale = 0.6f;
 constexpr float screen_scale_divisor = 700.0f;
 
@@ -50,7 +55,7 @@ constexpr float victory_balls_size = 3.0f;
 
 Vector2 screen_size;
 float screen_scale;
-float cell_size;
+
 Vector2 shift_to_center;
 
 Vector2 victory_balls_pos[victory_balls_count];
@@ -270,6 +275,15 @@ void draw_level()
         enemy_frame_counter = 0;
     }
 
+    portal_frame_counter++;
+    if (portal_frame_counter >= portal_frame_speed) {
+        portal_frame++;
+        if (portal_frame > 2)
+            portal_frame = 0;
+
+        portal_frame_counter = 0;
+    }
+
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
             const char data = current_level.data[row * current_level.columns + column];
@@ -285,6 +299,17 @@ void draw_level()
                 break;
             case BREAKABLE:
                 draw_image(block_texture, texture_x_pos, texture_y_pos, cell_size);
+                break;
+            case PORTAL1:
+                animate_texture(portal_sprite, portal_frame, texture_x_pos, texture_y_pos - 20, cell_size, cell_size / 2, 11, 33);
+                break;
+            case PORTAL2:
+                animate_texture(portal_sprite, portal_frame, texture_x_pos, texture_y_pos - 20, cell_size, cell_size / 2, 11, 33);
+                break;
+            case SHIELD:
+                animate_texture(enemy_sprite, enemy_frame, texture_x_pos, texture_y_pos, 1.2 * cell_size, cell_size * 1.2, 16, 20);
+                if (shield_hp == 2)
+                    draw_image(shield_texture, texture_x_pos - 10, texture_y_pos - 10, cell_size * 1.5);
                 break;
             default:;
             }
@@ -431,7 +456,13 @@ void draw_victory_menu()
 void draw_game_over_menu()
 {
     ClearBackground(BLACK);
-
+    DrawTexturePro(
+        background_defeat,
+        { 0, 0, 640.0, 360.0 },
+        { 0, 0, 1280.0, 720.0 },
+        { 0, 0 },
+        0,
+        WHITE);
     const Text game_over_title = {
         "GAME OVER",
         { 0.75, 0.20 },

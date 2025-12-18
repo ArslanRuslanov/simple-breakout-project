@@ -7,6 +7,7 @@
 #include "paddle.h"
 
 #include "raylib.h"
+#include "shield.h"
 #include "sword.h"
 
 char* current_level_data;
@@ -31,7 +32,7 @@ void load_level(const int offset)
     for (int row = 0; row < rows; ++row) {
         for (int column = 0; column < columns; ++column) {
             current_level_data[row * columns + column] = levels[current_level_index].data[row * columns + column];
-            if (current_level_data[row * columns + column] == ENEMY || current_level_data[row * columns + column] == BOSS) {
+            if (current_level_data[row * columns + column] == ENEMY || current_level_data[row * columns + column] == BOSS || current_level_data[row * columns + column] == SHIELD) {
                 ++current_level_blocks;
             }
         }
@@ -40,11 +41,12 @@ void load_level(const int offset)
 
     spawn_ball();
     spawn_paddle();
-    if (current_level_index == 3) {
+    if (current_level_index == 4) {
         spawn_boss();
         spawn_sword();
     }
     hit = boss_hp;
+    shield_hp = 2;
 
     derive_graphics_metrics();
 }

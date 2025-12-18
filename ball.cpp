@@ -3,7 +3,7 @@
 #include "boss.h"
 #include "level.h"
 #include "paddle.h"
-#include "sword.h"
+#include "shield.h"
 
 #include "raylib.h"
 
@@ -68,6 +68,22 @@ void move_ball()
 
         temp = VOID;
         --current_level_blocks;
+    } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, SHIELD)) {
+        char& temp = get_colliding_level_cell(next_ball_pos, ball_size, SHIELD);
+        shield_hp--;
+
+        if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, SHIELD)) {
+            ball_vel.x = -ball_vel.x;
+            next_ball_pos.x = std::round(next_ball_pos.x);
+        }
+        if (is_colliding_with_level_cell({ ball_pos.x, next_ball_pos.y }, ball_size, SHIELD)) {
+            ball_vel.y = -ball_vel.y;
+            next_ball_pos.y = std::round(next_ball_pos.y);
+        }
+        if (shield_hp <= 0) {
+            temp = VOID;
+            --current_level_blocks;
+        }
     } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, BREAKABLE)) {
         char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BREAKABLE);
 

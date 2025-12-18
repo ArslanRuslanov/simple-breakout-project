@@ -31,5 +31,6 @@ add_executable(
         boss.h
         sword.cpp
         sword.h
+        shield.h
 )
 target_link_libraries(breakout PRIVATE raylib glfw)
