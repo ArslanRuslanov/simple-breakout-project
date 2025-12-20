@@ -15,10 +15,9 @@ void spawn_sword()
             }
         }
     }
-    int random_position_x = fmod(1 + rand(), static_cast<float>(current_level.columns) - 1);
-    int random_position_y = fmod(1 + rand(), static_cast<float>(current_level.rows) - 1);
+    int random_position_x = GetRandomValue(1, static_cast<float>(current_level.columns) - 1);
 
-    sword_pos = { rand_pos_x[random_position_x], rand_pos_y[random_position_y] };
+    sword_pos = { rand_pos_x[random_position_x], rand_pos_y[0] };
     sword_vel.y = 0.1;
 }
 

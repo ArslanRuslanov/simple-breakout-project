@@ -358,7 +358,7 @@ void draw_sword()
     const float texture_y_pos = shift_to_center.y + sword_pos.y * cell_size;
     int frameWidth = 50;
     int frameHeight = 125;
-    draw_image(sword_texture, texture_x_pos, texture_y_pos, frameWidth, frameHeight);
+    draw_image(sword_texture, texture_x_pos, texture_y_pos, frameWidth - 20, frameHeight - 20);
 }
 
 void draw_paddle()

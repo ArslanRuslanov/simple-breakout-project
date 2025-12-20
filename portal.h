@@ -4,6 +4,7 @@
 #include "raylib.h"
 
 inline constexpr Vector2 portal_size = { 1.0f, 1.0f };
+inline int portal_cooldown = 0;
 
 inline Vector2 portal1_pos;
 inline Vector2 portal2_pos;

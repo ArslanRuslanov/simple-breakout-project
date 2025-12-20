@@ -102,8 +102,18 @@ void move_ball()
         ball_vel.y = -std::abs(ball_vel.y);
     }
     if (current_level_index == 2) {
-        if (is_colliding_with_portal1(next_ball_pos, ball_size)) {
-            next_ball_pos = portal2_pos;
+        portal_cooldown++;
+        if (portal_cooldown >= 15) {
+            if (is_colliding_with_portal1(next_ball_pos, ball_size)) {
+                next_ball_pos = portal2_pos;
+                portal_cooldown = 0;
+            }
+        }
+        if (portal_cooldown >= 15) {
+            if (is_colliding_with_portal2(next_ball_pos, ball_size)) {
+                next_ball_pos = portal1_pos;
+                portal_cooldown = 0;
+            }
         }
     }
     if (current_level_index == 4) {
