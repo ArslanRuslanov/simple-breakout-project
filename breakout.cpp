@@ -36,7 +36,7 @@ void update()
         if (is_paddle_colliding_with_sword() || !is_ball_inside_level()) {
             load_level();
             paddle_hp--;
-            PlaySound(boss_sound);
+            PlaySound(lose_sound);
         } else if (current_level_blocks == 0) {
             load_level(1);
             paddle_hp++;
@@ -96,9 +96,40 @@ void draw()
     case game_over_state:
         draw_game_over_menu();
         break;
+    case cut_scene_state:
+
+        break;
     }
 }
 
+void play_music()
+{
+    switch (game_state) {
+    case menu_state:
+        UpdateMusicStream(main_menu_sound);
+        break;
+    case in_game_state:
+        UpdateMusicStream(level_sound);
+        ResumeMusicStream(level_sound);
+        if (current_level_index == 4) {
+            PauseMusicStream(level_sound);
+            UpdateMusicStream(boss_level_sound);
+        }
+        break;
+    case paused_state:
+
+        break;
+    case victory_state:
+        UpdateMusicStream(win_sound);
+        break;
+    case game_over_state:
+
+        break;
+    case cut_scene_state:
+
+        break;
+    }
+}
 int main()
 {
     SetConfigFlags(FLAG_VSYNC_HINT);
@@ -109,10 +140,16 @@ int main()
     load_textures();
     load_level();
     load_sounds();
+    PlayMusicStream(main_menu_sound);
+    PlayMusicStream(level_sound);
+    PlayMusicStream(boss_level_sound);
+    PlayMusicStream(win_sound);
+
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         draw();
+        play_music();
         update();
         EndDrawing();
     }

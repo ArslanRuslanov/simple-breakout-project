@@ -64,21 +64,29 @@ void unload_textures()
 void load_sounds()
 {
     InitAudioDevice();
+
     hit_sound = LoadSound("data/sounds/win.wav");
-    boss_sound = LoadSound("data/sounds/lose.wav");
-    boss_level_sound = LoadSound("data/sounds/boss_soundtrack.wav");
-    level_sound = LoadSound("data/sounds/level_soundtrack.wav");
-    main_menu_sound = LoadSound("data/sounds/main_menu_soundtrack.wav");
-    win_sound = LoadSound("data/sounds/victory_menu_soundtrack.wav");
+    lose_sound = LoadSound("data/sounds/lose.wav");
+
+    boss_level_sound = LoadMusicStream("data/sounds/boss_soundtrack.wav");
+    level_sound = LoadMusicStream("data/sounds/level_soundtrack.wav");
+    main_menu_sound = LoadMusicStream("data/sounds/main_menu_soundtrack.wav");
+    win_sound = LoadMusicStream("data/sounds/victory_menu_soundtrack.wav");
+
+    main_menu_sound.looping = true;
+    boss_level_sound.looping = true;
+    level_sound.looping = true;
+    win_sound.looping = true;
+
 }
 
 void unload_sounds()
 {
     UnloadSound(hit_sound);
-    UnloadSound(boss_sound);
-    UnloadSound(boss_level_sound);
-    UnloadSound(level_sound);
-    UnloadSound(main_menu_sound);
-    UnloadSound(win_sound);
+    UnloadSound(lose_sound);
+    UnloadMusicStream(boss_level_sound);
+    UnloadMusicStream(level_sound);
+    UnloadMusicStream(main_menu_sound);
+    UnloadMusicStream(win_sound);
     CloseAudioDevice();
 }

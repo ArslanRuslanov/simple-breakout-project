@@ -29,11 +29,12 @@ inline sprite logo_sprite;
 inline sprite portal_sprite;
 
 inline Sound hit_sound;
-inline Sound boss_level_sound;
-inline Sound win_sound;
-inline Sound level_sound;
-inline Sound main_menu_sound;
-inline Sound boss_sound;
+inline Sound lose_sound;
+
+inline Music boss_level_sound;
+inline Music win_sound;
+inline Music level_sound;
+inline Music main_menu_sound;
 
 void load_fonts();
 void unload_fonts();
