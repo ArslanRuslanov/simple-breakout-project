@@ -30,6 +30,9 @@ inline sprite portal_sprite;
 
 inline Sound hit_sound;
 inline Sound lose_sound;
+inline Sound portal_sound;
+inline Sound break_sound;
+inline Sound boss_hit_sound;
 
 inline Music boss_level_sound;
 inline Music win_sound;

@@ -72,6 +72,7 @@ void move_ball()
     } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, SHIELD)) {
         char& temp = get_colliding_level_cell(next_ball_pos, ball_size, SHIELD);
         shield_hp--;
+        PlaySound(break_sound);
 
         if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, SHIELD)) {
             ball_vel.x = -ball_vel.x;
@@ -87,6 +88,7 @@ void move_ball()
         }
     } else if (is_colliding_with_level_cell(next_ball_pos, ball_size, BREAKABLE)) {
         char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BREAKABLE);
+        PlaySound(break_sound);
 
         if (is_colliding_with_level_cell({ next_ball_pos.x, ball_pos.y }, ball_size, BREAKABLE)) {
             ball_vel.x = -ball_vel.x;
@@ -105,12 +107,14 @@ void move_ball()
         portal_cooldown++;
         if (portal_cooldown >= 15) {
             if (is_colliding_with_portal1(next_ball_pos, ball_size)) {
+                PlaySound(portal_sound);
                 next_ball_pos = portal2_pos;
                 portal_cooldown = 0;
             }
         }
         if (portal_cooldown >= 15) {
             if (is_colliding_with_portal2(next_ball_pos, ball_size)) {
+                PlaySound(portal_sound);
                 next_ball_pos = portal1_pos;
                 portal_cooldown = 0;
             }
@@ -118,6 +122,7 @@ void move_ball()
     }
     if (current_level_index == 4) {
         if (is_colliding_with_boss(next_ball_pos, ball_size)) {
+            PlaySound(boss_hit_sound);
             char& temp = get_colliding_level_cell(next_ball_pos, ball_size, BOSS);
             hit--;
             PlaySound(hit_sound);

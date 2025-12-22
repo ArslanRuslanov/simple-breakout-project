@@ -67,6 +67,9 @@ void load_sounds()
 
     hit_sound = LoadSound("data/sounds/win.wav");
     lose_sound = LoadSound("data/sounds/lose.wav");
+    boss_hit_sound = LoadSound("data/sounds/boss_hit.wav");
+    break_sound = LoadSound("data/sounds/break_wall.wav");
+    portal_sound = LoadSound("data/sounds/portal.wav");
 
     boss_level_sound = LoadMusicStream("data/sounds/boss_soundtrack.wav");
     level_sound = LoadMusicStream("data/sounds/level_soundtrack.wav");
