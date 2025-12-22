@@ -1,4 +1,4 @@
-Simple Breakout: Skeli's Adventure
+# Simple Breakout: Skeli's Adventure
 
 ![Breakout](https://i.postimg.cc/6qJkbyhT/Снимок_экрана_2025_12_21_184403.png)
 
@@ -70,15 +70,11 @@ They summoned the dungeon boss! Defeat him and dodge his swords!
 
 ![Victory Screen](https://i.postimg.cc/W18sD6wZ/Снимок_экрана_2025_12_21_184729.png)
 
----
-
-## Additional Requirements
-
 * **Game Over Screen**: after losing all your lives, you are directed to the Game Over Screen
 
 ![Game Over Screen](https://i.postimg.cc/C58Fd3cL/Снимок_экрана_2025_12_21_184750.png)
 
-
+---
 
 
 ## Links
@@ -100,4 +96,5 @@ They summoned the dungeon boss! Defeat him and dodge his swords!
 
 ## Credits
 
+* [Arslan Ruslanov](https://github.com/ArslanRuslanov)
 * [Luna Maltseva](https://github.com/lunamaltseva)
