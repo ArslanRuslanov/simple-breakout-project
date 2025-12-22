@@ -321,7 +321,6 @@ void draw_portal()
 
     animate_texture(portal_sprite, portal_frame, texture_x_pos, texture_y_pos, cell_size, cell_size, 11, 33);
     animate_texture(portal_sprite, portal_frame, texture_x1_pos, texture_y1_pos, cell_size, cell_size, 11, 33);
-
 }
 
 void draw_boss_hp()

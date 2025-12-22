@@ -1,5 +1,5 @@
-#include "level.h"
 #include "sword.h"
+#include "level.h"
 
 #include "raylib.h"
 #include <cstdlib>
@@ -38,6 +38,3 @@ void move_sword()
     }
     sword_pos = next_sword_pos;
 }
-
-
-

@@ -2,7 +2,7 @@
 #define BREAKOUT_SWORD_H
 #include "level.h"
 
-inline constexpr Vector2 sword_size = {0.5f, 1.0f};
+inline constexpr Vector2 sword_size = { 0.5f, 1.0f };
 
 inline float rand_pos_x[13];
 inline float rand_pos_y[13];

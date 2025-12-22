@@ -36,10 +36,9 @@ bool is_colliding_with_paddle(const Vector2 pos, const Vector2 size)
     return CheckCollisionRecs(paddle_hitbox, hitbox);
 }
 
-
 bool is_paddle_colliding_with_sword()
 {
-    Rectangle sword_box = {sword_pos.x, sword_pos.y, sword_size.x, sword_size.y};
-    Rectangle paddle_box = {paddle_pos.x, paddle_pos.y, paddle_size.x, paddle_size.y};
+    Rectangle sword_box = { sword_pos.x, sword_pos.y, sword_size.x, sword_size.y };
+    Rectangle paddle_box = { paddle_pos.x, paddle_pos.y, paddle_size.x, paddle_size.y };
     return CheckCollisionRecs(paddle_box, sword_box);
 }

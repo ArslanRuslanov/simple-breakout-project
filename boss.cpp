@@ -3,8 +3,6 @@
 
 #include "raylib.h"
 
-#include <cmath>
-
 void spawn_boss()
 {
     for (int column = 0; column < current_level.columns; column++) {

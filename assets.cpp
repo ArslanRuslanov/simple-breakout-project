@@ -34,7 +34,6 @@ void load_textures()
     boss_sprite = load_sprite("data/images/boss/boss", ".png", 2, true, 1);
     enemy_sprite = load_sprite("data/images/enemy/enemy", ".png", 5, true, 1);
     heart_sprite = load_sprite("data/images/heart/heart", ".png", 2, true, 1);
-
 }
 
 void unload_textures()
@@ -80,16 +79,20 @@ void load_sounds()
     boss_level_sound.looping = true;
     level_sound.looping = true;
     win_sound.looping = true;
-
 }
 
 void unload_sounds()
 {
     UnloadSound(hit_sound);
     UnloadSound(lose_sound);
+    UnloadSound(boss_hit_sound);
+    UnloadSound(portal_sound);
+    UnloadSound(break_sound);
+
     UnloadMusicStream(boss_level_sound);
     UnloadMusicStream(level_sound);
     UnloadMusicStream(main_menu_sound);
     UnloadMusicStream(win_sound);
+
     CloseAudioDevice();
 }

@@ -32,7 +32,9 @@ void update()
             move_boss();
             move_sword();
         }
+
         move_ball();
+
         if (is_paddle_colliding_with_sword() || !is_ball_inside_level()) {
             load_level();
             paddle_hp--;
@@ -40,8 +42,10 @@ void update()
         } else if (current_level_blocks == 0) {
             load_level(1);
             paddle_hp++;
-            if (paddle_hp > 3) paddle_hp = 3;
+            if (paddle_hp > 3)
+                paddle_hp = 3;
         }
+
         if (paddle_hp == 0) {
             game_state = game_over_state;
         }
@@ -62,6 +66,7 @@ void update()
     case game_over_state:
         current_level_index = 0;
         paddle_hp = 3;
+
         if (IsKeyPressed(KEY_ENTER)) {
             game_state = menu_state;
         }
@@ -80,7 +85,8 @@ void draw()
         draw_paddle();
         draw_ball();
         draw_ui();
-        if (current_level_index == 2) draw_portal();
+        if (current_level_index == 2)
+            draw_portal();
         if (current_level_index == 4) {
             draw_boss();
             draw_boss_hp();
@@ -111,6 +117,7 @@ void play_music()
     case in_game_state:
         UpdateMusicStream(level_sound);
         ResumeMusicStream(level_sound);
+
         if (current_level_index == 4) {
             PauseMusicStream(level_sound);
             UpdateMusicStream(boss_level_sound);
@@ -140,17 +147,19 @@ int main()
     load_textures();
     load_level();
     load_sounds();
+
     PlayMusicStream(main_menu_sound);
     PlayMusicStream(level_sound);
     PlayMusicStream(boss_level_sound);
     PlayMusicStream(win_sound);
 
-
     while (!WindowShouldClose()) {
         BeginDrawing();
+
         draw();
         play_music();
         update();
+
         EndDrawing();
     }
     CloseWindow();

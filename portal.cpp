@@ -23,14 +23,14 @@ void spawn_portal()
 
 bool is_colliding_with_portal1(const Vector2 pos, const Vector2 size)
 {
-    const Rectangle portal1_box = {portal1_pos.x, portal1_pos.y, portal_size.x, portal_size.y};
+    const Rectangle portal1_box = { portal1_pos.x, portal1_pos.y, portal_size.x, portal_size.y };
     const Rectangle hitbox = { pos.x, pos.y, size.x, size.y };
     return CheckCollisionRecs(portal1_box, hitbox);
 }
 
 bool is_colliding_with_portal2(const Vector2 pos, const Vector2 size)
 {
-    const Rectangle portal2_box = {portal2_pos.x, portal2_pos.y, portal_size.x, portal_size.y};
+    const Rectangle portal2_box = { portal2_pos.x, portal2_pos.y, portal_size.x, portal_size.y };
     const Rectangle hitbox = { pos.x, pos.y, size.x, size.y };
     return CheckCollisionRecs(portal2_box, hitbox);
 }

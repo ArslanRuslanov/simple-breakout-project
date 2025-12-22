@@ -3,15 +3,13 @@
 #include "boss.h"
 #include "level.h"
 #include "paddle.h"
-#include "shield.h"
 #include "portal.h"
+#include "shield.h"
 
 #include "raylib.h"
 
 #include <cmath>
 #include <numbers>
-
-
 
 void spawn_ball()
 {
@@ -103,6 +101,7 @@ void move_ball()
     } else if (is_colliding_with_paddle(next_ball_pos, ball_size)) {
         ball_vel.y = -std::abs(ball_vel.y);
     }
+
     if (current_level_index == 2) {
         portal_cooldown++;
         if (portal_cooldown >= 15) {
@@ -120,6 +119,7 @@ void move_ball()
             }
         }
     }
+
     if (current_level_index == 4) {
         if (is_colliding_with_boss(next_ball_pos, ball_size)) {
             PlaySound(boss_hit_sound);
